@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class EmployeePayrollService {
     public enum IOService {
-        CONSOLE_IO, FILE_IO, DB_IO, REST_IO
+        CONSOLE_IO, FILE_IO, DB_IO, REST_IO;
     }
 
     private List<EmployeePayrollData> employeeList;
-    public EmployeePayrollService() {}
+    public EmployeePayRollService() {}
 
     public EmployeePayrollService(List<EmployeePayrollData> employeeList) {
         this.employeeList = employeeList;
