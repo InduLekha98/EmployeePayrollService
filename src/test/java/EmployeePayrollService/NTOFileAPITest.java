@@ -1,4 +1,4 @@
-package com.EmployeEPayrollService;
+package com.EmployeePayrollService;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class NTOFileAPITest {
     private static String HOME = System.getProperty("user.home");
@@ -38,5 +40,11 @@ public class NTOFileAPITest {
         Files.newDirectoryStream(playPath).forEach(System.out::println);
         Files.newDirectoryStream(playPath , path -> path.toFile().isFile() && path.toString().startsWith("temp"))
                 .forEach(System.out::println);
+    }
+    @Test
+    void givenADirectoryWhenWatchAllActivities() throws IOException{
+        Path dir = Paths.get(HOME+ "/"+PLAY_WITH_NIO);
+        Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+        new JavaWatchService(dir).processEvent();
     }
 }
