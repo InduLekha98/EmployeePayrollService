@@ -1,6 +1,4 @@
-
 package com.EmployeePayrollService;
-
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -10,18 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JavaWatchService {
-
     private final WatchService watcher;
     private final Map<WatchKey, Path> dirWatchers;
 
-    //Creates a watchService and registers the given directory.
+
     JavaWatchService(Path dir) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.dirWatchers =new HashMap<WatchKey,Path>();
         scanAndRegisterDirectories(dir);
     }
 
-    //Register the given directory with watchService.
     private void registerDirWatchers(Path dir) throws IOException{
         WatchKey key = dir.register(watcher,ENTRY_CREATE,
                 ENTRY_DELETE,ENTRY_MODIFY);
@@ -43,12 +39,11 @@ public class JavaWatchService {
             WatchKey key;
             try {
                 key=watcher.take();
-            }catch (InterruptedException x) {
+            }catch (InterruptedException x){
                 return;
             }
             Path dir = dirWatchers.get(key);
-            if (dir == null)
-                continue;
+            if (dir == null) continue;
             for (WatchEvent<?>event:key.pollEvents()){
                 WatchEvent.Kind kind = event.kind();
                 Path name = ((WatchEvent<Path>)event).context();
@@ -67,8 +62,7 @@ public class JavaWatchService {
             boolean valid = key.reset();
             if (!valid){
                 dirWatchers.remove(key);
-                if (dirWatchers.isEmpty())
-                    break;
+                if (dirWatchers.isEmpty())break;
             }
         }
     }
