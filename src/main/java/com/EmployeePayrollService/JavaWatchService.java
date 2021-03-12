@@ -13,8 +13,8 @@ public class JavaWatchService {
         private final WatchService watcher;
         private final Map<WatchKey, Path> dirWatchers;
 
-        //Creates a watchservice and registers the given directory.
-        Java8WatchService(Path dir) throws IOException {
+        //Creates a watchService and registers the given directory.
+        JavaWatchService(Path dir) throws IOException {
             this.watcher = FileSystems.getDefault().newWatchService();
             this.dirWatchers =new HashMap<WatchKey,Path>();
             scanAndRegisterDirectories(dir);
@@ -42,11 +42,12 @@ public class JavaWatchService {
                 WatchKey key;
                 try {
                     key=watcher.take();
-                }catch (InterruptedException x){
+                }catch (InterruptedException x) {
                     return;
                 }
                 Path dir = dirWatchers.get(key);
-                if (dir == null) continue;
+                if (dir == null)
+                    continue;
                 for (WatchEvent<?>event:key.pollEvents()){
                     WatchEvent.Kind kind = event.kind();
                     Path name = ((WatchEvent<Path>)event).context();
@@ -65,9 +66,10 @@ public class JavaWatchService {
                 boolean valid = key.reset();
                 if (!valid){
                     dirWatchers.remove(key);
-                    if (dirWatchers.isEmpty())break;
+                    if (dirWatchers.isEmpty())
+                        break;
                 }
             }
         }
     }
-}
+
