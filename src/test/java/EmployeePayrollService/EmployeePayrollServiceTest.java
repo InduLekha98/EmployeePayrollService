@@ -1,4 +1,3 @@
-
 package com.EmployeePayrollService;
 
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,6 @@ public class EmployeePayrollServiceTest {
         };
         EmployeePayrollService EmployeePayrollService;
         EmployeePayrollService = new EmployeePayrollService(Arrays.asList(arrayOfEmployees));
-        EmployeePayrollService.writeData();
+        EmployeePayrollService(EmployeePayrollService.IOService.FILE_IO);
     }
 }
