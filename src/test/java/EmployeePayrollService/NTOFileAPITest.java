@@ -15,31 +15,33 @@ public class NTOFileAPITest {
     private static String PLAY_WITH_NIO = "TempPlayGround";
 
     @Test
-    void givenPathWhenCheckedThenConfirm() throws IOException{
+    void givenPathWhenCheckedThenConfirm() throws IOException {
         Path homePath = Paths.get(HOME);
         Assertions.assertTrue(Files.exists(homePath));
 
-        Path playPath = Paths.get(HOME + "/"+PLAY_WITH_NIO);
-        if (Files.exists(playPath))FileUtils.deleteFiles(playPath.toFile());
+        Path playPath = Paths.get(HOME + "/" + PLAY_WITH_NIO);
+        if (Files.exists(playPath)) FileUtils.deleteFiles(playPath.toFile());
         Assertions.assertTrue(Files.notExists(playPath));
 
         Files.createDirectories(playPath);
         Assertions.assertTrue(Files.exists(playPath));
 
-        IntStream.range(1,10).forEach(fileNumber ->{
-            Path tempFile = Paths.get(playPath + "/temp"+fileNumber);
+        IntStream.range(1, 10).forEach(fileNumber -> {
+            Path tempFile = Paths.get(playPath + "/temp" + fileNumber);
             Assertions.assertTrue(Files.notExists(tempFile));
             try {
                 Files.createFile(tempFile);
-            }catch (IOException e){}
+            } catch (IOException e) {
+            }
             Assertions.assertTrue(Files.exists(tempFile));
-        } );
+        });
 
         Files.list(playPath).filter(Files::isRegularFile).forEach(System.out::println);
         Files.newDirectoryStream(playPath).forEach(System.out::println);
-        Files.newDirectoryStream(playPath , path -> path.toFile().isFile() && path.toString().startsWith("temp"))
+        Files.newDirectoryStream(playPath, path -> path.toFile().isFile() && path.toString().startsWith("temp"))
                 .forEach(System.out::println);
     }
+
     @Test
     void givenADirectoryWhenWatchAllActivities() throws IOException {
         Path dir = Paths.get(HOME + "/" + PLAY_WITH_NIO);
